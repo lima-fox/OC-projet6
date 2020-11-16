@@ -10430,7 +10430,8 @@ section#contact {
   background-position: center;
 }
 section#contact .section-heading {
-  color: #fff;
+  margin-top: 120px;
+  color: black;
 }
 section#contact form#contactForm .form-group {
   margin-bottom: 1.5rem;
