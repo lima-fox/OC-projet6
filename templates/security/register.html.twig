@@ -13,7 +13,7 @@
             <h2 class="section-heading text-uppercase">Enregistrez-vous</h2>
             <h3 class="section-subheading text-muted"></h3>
         </div>
-        <form id="contactForm" name="sentMessage" novalidate="novalidate">
+        <form id="contactForm" name="sentMessage" novalidate="novalidate" action="{{ path('register_process') }}" method="POST">
             <div class="row align-items-stretch mb-5 justify-content-md-center">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -25,19 +25,24 @@
                         <p class="help-block text-danger"></p>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" id="password1" name="password1" type="password" placeholder="mot de passe *" required="required" data-validation-required-message="Entrez un mot de passe." />
+                        <input class="form-control" id="password1" name="password" type="password" placeholder="mot de passe *" required="required" data-validation-required-message="Entrez un mot de passe." />
                         <p class="help-block text-danger"></p>
                     </div>
                     <div class="form-group">
                         <input class="form-control" id="password2" name="password2" type="password" placeholder="confirmez votre mot de passe *" required="required" data-validation-required-message="Confirmez votre mot de passe." />
                         <p class="help-block text-danger"></p>
                     </div>
+                    <div class="form-group">
+                        <input type="hidden" name="_csrf_token"
+                               value="{{ csrf_token('register') }}">
+                        <p class="help-block text-danger"></p>
+                    </div>
                 </div>
 
             </div>
             <div class="text-center">
-                <div id="success"></div>
-                <button class="btn btn-primary btn-xl text-uppercase" id="sendMessageButton" type="submit">S'enregistrer</button>
+                {# <div id="success"></div>  #}
+                <button class="btn btn-primary btn-xl text-uppercase" {#  id="sendMessageButton" #} type="submit">S'enregistrer</button>
             </div>
         </form>
     </div>
