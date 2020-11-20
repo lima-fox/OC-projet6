@@ -6,10 +6,13 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RegisterType extends AbstractType
 {
@@ -18,6 +21,7 @@ class RegisterType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Votre prénom et nom',
+                'constraints' => new Length(['min' => 3, 'max' => 30]),
                 'attr' => [
                     'placeholder' => 'Merci de saisir votre prénom et votre nom'
                 ]
@@ -28,17 +32,23 @@ class RegisterType extends AbstractType
                     'placeholder' => 'Merci de saisir votre adresse email'
                 ]
             ])
-            ->add('password', PasswordType::class, [
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'Le mot de passe et la confirmation doivent être identique.',
                 'label' => 'Votre mot de passe',
-                'attr' => [
-                    'placeholder' => 'Merci de saisir un mot de passe'
-                ]
-            ])
-            ->add('password2', PasswordType::class, [
-                'label' => 'Confirmez votre mot de passe',
-                'mapped' => false,
-                'attr' => [
-                    'placeholder' => 'Merci de confirmer votre mot de passe'
+                'required' => true,
+                'constraints' => new Length(['min' => 3, 'max' => 30]),
+                'first_options' => [
+                    'label' => 'Mot de passe',
+                    'attr' => [
+                        'placeholder' => 'Merci de saisir votre mot de passe'
+                        ],
+                ],
+                'second_options' => [
+                    'label' => 'confirmez votre mot de passe',
+                    'attr' => [
+                        'placeholder' => 'Merci de confirmer votre mot de passe'
+                    ],
                 ]
             ])
             ->add('submit', SubmitType::class,[

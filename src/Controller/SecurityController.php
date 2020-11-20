@@ -38,56 +38,12 @@ class SecurityController extends AbstractController
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
-    public function register()
-    {
-        return $this->render('security/register.html.twig');
-    }
+    
 
-    //ajouter la route qui va bien
-    public function register_process(Request $request, ValidatorInterface $validator) {
-
-        //https://symfony.com/doc/current/security/csrf.html#csrf-protection-in-symfony-forms
-        $submittedToken = $request->request->get('_csrf_token');
-
-        if (!$this->isCsrfTokenValid('register', $submittedToken)) {
-            return new Response(null, 403);
-        }
-
-        $name = $request->request->get("name");
-        $email = $request->request->get("email");
-        $password = $request->request->get("password");
-        $password2 = $request->request->get("password2");
-
-        if ($password |= $password2)
-        {
-            $error_pass = 'Les deux mot de passe ne sont pas identiques';
-        }
-
-        $user = new User();
-        $user->setName($name);
-        $user->setEmail($email);
-        $user->setPassword($password);
-
-        $errors = $validator->validate($user);
-        var_dump($errors);
-        //exit();
-
-        if (count($errors) > 0) {
-            /*
-             * Uses a __toString method on the $errors variable which is a
-             * ConstraintViolationList object. This gives us a nice string
-             * for debugging.
-             */
-            $errorsString = (string) $errors;
-
-            return new Response($errorsString);
-        }
-
-        //https://symfony.com/doc/current/validation.html
-
-        //inserer en base
-        //https://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/first_steps.html#service-repositories
-
-        // return redirect
-    }
 }
+
+    //public function register()
+    //{
+      //  return $this->render('security/register.html.twig');
+    //}
+

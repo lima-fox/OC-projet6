@@ -42,7 +42,12 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="integer")
      */
-    private $status;
+    private $status = 0;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $hash;
 
     public function getId(): ?int
     {
@@ -142,6 +147,18 @@ class User implements UserInterface
     public function setStatus(int $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getHash(): ?string
+    {
+        return $this->hash;
+    }
+
+    public function setHash(string $hash): self
+    {
+        $this->hash = $hash;
 
         return $this;
     }
