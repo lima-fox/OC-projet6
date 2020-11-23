@@ -16,3 +16,6 @@ register_process:
 inscription:
     path: /inscription
     controller: App\Controller\RegisterController::index
+verify_mail:
+    path: /verify/mail/{hash}
+    controller: App\Controller\RegisterController::verify_mail

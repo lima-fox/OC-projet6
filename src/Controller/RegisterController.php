@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegisterType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,10 +37,12 @@ class RegisterController extends AbstractController
 
             $password = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
+            $user->setHash($hash);
             //$user->setStatus(1);
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();
+            $verify_mail = $this->generateUrl('verify_mail', ['hash' => $hash]);
 
             $to      = $user->getEmail(); // Send email to our user
             $subject = 'Activez votre adresse mail'; // Give the email a subject
@@ -51,7 +54,7 @@ class RegisterController extends AbstractController
             
              
             Merci de cliquer sur le lien ci-dessous afin de l\'activer.
-            http://snowtricks.test/verify/mail?hash='.$hash.'
+            http://snowtricks.test/'.$verify_mail.'
              
             '; // Our message above including the link
 
@@ -64,5 +67,23 @@ class RegisterController extends AbstractController
         return $this->render('register/index.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    public function verify_mail(UserRepository $userRepository, string $hash): Response
+    {
+        $user = $userRepository->findByHash($hash);
+
+        if($user == null)
+            throw $this->createNotFoundException(
+                'Impossible de valider cette adresse mail'
+            );
+
+        $user->setStatus(1);
+
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        return $this->redirectToRoute("login");
+
     }
 }
