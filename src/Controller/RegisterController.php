@@ -54,13 +54,18 @@ class RegisterController extends AbstractController
             
              
             Merci de cliquer sur le lien ci-dessous afin de l\'activer.
-            http://snowtricks.test/'.$verify_mail.'
+            http://snowtricks.test'.$verify_mail.'
              
             '; // Our message above including the link
 
             mail($to, $subject, $message); // Send our email
 
-            //header('Location: /seconnecter');
+            $this->addFlash(
+                'success',
+                'Votre inscription est terminée, veuillez activer votre adresse mail pour vous connecter.'
+            );
+
+            return $this->redirectToRoute("login");
 
         }
 
@@ -82,6 +87,11 @@ class RegisterController extends AbstractController
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
+
+        $this->addFlash(
+            'success',
+            'Votre compte est maintenant validé !'
+        );
 
         return $this->redirectToRoute("login");
 

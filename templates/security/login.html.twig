@@ -25,10 +25,16 @@
                         You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
                     </div>
                 {% endif %}
+
                 <form id="contactForm" method="post">
 
                     <div class="row align-items-stretch mb-5 justify-content-md-center">
                         <div class="col-md-6">
+                            {% for message in app.flashes('success') %}
+                                <div class="alert alert-success" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
                             <div class="form-group">
                                 <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Adresse e-mail" required autofocus>
                                 <p class="help-block text-danger"></p>

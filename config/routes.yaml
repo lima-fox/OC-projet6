@@ -7,12 +7,6 @@ login:
 logout:
     path: /logout
     controller: App\Controller\SecurityController::logout
-register:
-    path: /register
-    controller: App\Controller\SecurityController::register
-register_process:
-    path: /register_process
-    controller: App\Controller\SecurityController::register_process
 inscription:
     path: /inscription
     controller: App\Controller\RegisterController::index
