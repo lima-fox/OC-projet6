@@ -4,6 +4,12 @@ index:
 login:
     path: /login
     controller: App\Controller\SecurityController::login
-register:
-    path: /register
-    controller: App\Controller\SecurityController::register
+logout:
+    path: /logout
+    controller: App\Controller\SecurityController::logout
+inscription:
+    path: /inscription
+    controller: App\Controller\RegisterController::index
+verify_mail:
+    path: /verify/mail/{hash}
+    controller: App\Controller\RegisterController::verify_mail

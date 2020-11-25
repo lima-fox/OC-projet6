@@ -64,4 +64,13 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ;
     }
     */
+
+    public function findByHash(?string $hash): ?User
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.hash = :val')
+            ->setParameter('val', $hash)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
