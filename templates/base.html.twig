@@ -28,10 +28,16 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ml-auto">
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#services">Services</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
+                        {# <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#services">Services</a></li> #}
+                        {% if app.user == null %}
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/">Accueil</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/login">Connexion</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/inscription">S'inscrire</a></li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/">Accueil</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/logout">Déconnexion</a></li>
+                        {% endif %}
+                        {{ dump(app.user) }}
                     </ul>
                 </div>
             </div>
