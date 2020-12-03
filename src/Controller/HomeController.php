@@ -20,7 +20,7 @@ class HomeController extends AbstractController
 
     public function index() :Response
     {
-        $tricks = $this->entityManager->getRepository(Trick::class)->findAll();
+        $tricks = $this->entityManager->getRepository(Trick::class)->findBy([], ['id' => 'desc'], 15);
 
         return $this->render('home.html.twig', [
             'tricks' => $tricks
