@@ -72,6 +72,7 @@ class RegisterController extends AbstractController
         return $this->render('register/index.html.twig', [
             'form' => $form->createView()
         ]);
+
     }
 
     public function verify_mail(UserRepository $userRepository, string $hash): Response
