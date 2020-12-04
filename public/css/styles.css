@@ -10118,7 +10118,7 @@ header.masthead {
   padding-top: 10.5rem;
   padding-bottom: 6rem;
   text-align: center;
-  color: #fff;
+  color: #FFD166;
   background-image: url("../assets/img/header-bg.jpg");
   background-repeat: no-repeat;
   background-attachment: scroll;
@@ -10159,7 +10159,9 @@ header.masthead .masthead-heading {
   }
 }
 #portfolio .portfolio-item {
+
   max-width: 25rem;
+
   margin-left: auto;
   margin-right: auto;
 }
