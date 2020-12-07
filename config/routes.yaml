@@ -13,3 +13,6 @@ inscription:
 verify_mail:
     path: /verify/mail/{hash}
     controller: App\Controller\RegisterController::verify_mail
+trick:
+    path: /trick/{id}
+    controller: App\Controller\TrickController::index

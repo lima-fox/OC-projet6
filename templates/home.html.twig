@@ -34,7 +34,9 @@
                             <div class="portfolio-hover">
                                 <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
-                            <img class="img-fluid" src="{{ trick.getPhotos().first().path }}" alt="" />
+                            <a href="{{ path('trick', {id: trick.id}) }}" >
+                                <img class="img-fluid" src="{{ trick.getPhotos().first().path }}" alt="" />
+                            </a>
                         </a>
                         <div class="portfolio-caption">
                             <div class="portfolio-caption-heading">{{ trick.name }}
