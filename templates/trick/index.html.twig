@@ -6,12 +6,14 @@
     <!-- Masthead-->
     <header class="masthead">
         <div class="container">
-            <img src="{{ trick.getPhotos().first().path }}">
+            <img height="600px" width="900" src="{{ trick.getPhotos().first().path }}">
         </div>
     </header>
 {% endblock %}
 
 {% block content1 %}{% endblock %}
+{% block about %}{% endblock %}
+{% block contact %}{% endblock %}
 
 {% block content2 %}
     <!-- Portfolio Grid-->
@@ -19,10 +21,9 @@
         <div class="container">
             <div class="text-center">
                 <h2 class="section-heading text-uppercase">{{ trick.name }}</h2>
-                {# <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3> #}
             </div>
             <div class="row">
-                    {% for photo in trick.getPhotos() %}
+                {% for photo in trick.getPhotos() %}
                     <div class="col-lg-4 col-sm-6 mb-4">
                         <div class="portfolio-item">
                             <a class="portfolio-link" data-toggle="modal">
@@ -30,16 +31,34 @@
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
                                     <img class="img-fluid" src="{{ photo.path }}" alt="" />
-                                {{ trick.getVideos() }}
-                                </a>
                             </a>
-                            <p>{{ trick.description }}</p>
-                            
                         </div>
                     </div>
                 {% endfor %}
+                {% for video in trick.getVideos() %}
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" data-toggle="modal">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <iframe width="450" height="250" src="{{ video.link }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+                <p>{{ trick.description }}</p>
+
 
             </div>
+            {% if app.user != null %}
+            {{ form(form, {"attr": {"id":"contactForm"}} ) }}
+            {% endif %}
+
+            <h3>Commentaires</h3>
+            {% for comment in comments %}
+            {{ comment.getContent() }}
+            {% endfor %}
         </div>
     </section>
 
