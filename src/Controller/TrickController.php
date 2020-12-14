@@ -34,12 +34,15 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid())
         {
             $comment = $form->getData();
+            $date_comment = new \DateTime("now");
 
             $comment->setUser($this->getUser());
             $comment->setTrick($trick);
+            $comment->setDateComment($date_comment);
 
             $this->entityManager->persist($comment);
             $this->entityManager->flush();
+
 
         }
 
@@ -49,7 +52,8 @@ class TrickController extends AbstractController
         return $this->render('trick/index.html.twig', [
             'trick' => $trick,
             'form' => $form->createView(),
-            'comments' => $comments
+            'comments' => $comments,
+
         ]);
     }
 }

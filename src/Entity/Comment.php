@@ -34,6 +34,11 @@ class Comment
      */
     private $trick;
 
+    /**
+     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
+     */
+    private $date_comment;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -73,5 +78,22 @@ class Comment
         $this->trick = $trick;
 
         return $this;
+    }
+
+    public function getDateComment(): ?\DateTimeInterface
+    {
+        return $this->date_comment;
+    }
+
+    public function setDateComment(\DateTimeInterface $date_comment): self
+    {
+        $this->date_comment = $date_comment;
+
+        return $this;
+    }
+
+    public function getDateString() : string
+    {
+        return $this->getDateComment()->format('d-m-Y');
     }
 }

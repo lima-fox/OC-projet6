@@ -39,9 +39,9 @@
                     <div class="col-lg-4 col-sm-6 mb-4">
                         <div class="portfolio-item">
                             <a class="portfolio-link" data-toggle="modal">
-                                <div class="portfolio-hover">
+                                {# <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                                </div>
+                                </div> #}
                                 <iframe width="450" height="250" src="{{ video.link }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                             </a>
                         </div>
@@ -55,10 +55,15 @@
             {{ form(form, {"attr": {"id":"contactForm"}} ) }}
             {% endif %}
 
-            <h3>Commentaires</h3>
-            {% for comment in comments %}
-            {{ comment.getContent() }}
-            {% endfor %}
+
+            <h4 class="section-heading text-center col-lg-6">Commentaires</h4>
+                <div class="col-lg-4 col-sm-6 mb-4">
+                {% for comment in comments %}
+                <p>{{ comment.getContent() }}</p>
+                <p>{{ comment.getUser().getName() }} | {{ comment.getDateString() }}</p>
+                {% endfor %}
+                </div>
+
         </div>
     </section>
 
