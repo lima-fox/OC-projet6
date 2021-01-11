@@ -13,6 +13,9 @@ inscription:
 verify_mail:
     path: /verify/mail/{hash}
     controller: App\Controller\RegisterController::verify_mail
+addtrick:
+    path: /trick/addtrick
+    controller: App\Controller\TrickController::addTrick
 trick:
     path: /trick/{id}
     controller: App\Controller\TrickController::index
