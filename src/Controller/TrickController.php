@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Entity\Trick;
+use App\Entity\Video;
 use App\Form\CommentType;
 use App\Form\TrickType;
 use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
+use App\Repository\VideoRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,12 +62,32 @@ class TrickController extends AbstractController
     public function addTrick(Request $request) : Response
     {
         $trick = new Trick();
+
         $form = $this->createForm(TrickType::class, $trick);
+
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
+            $trick = $form->getData();
+            $video_url = $request->request->all()['trick']['videos'];
+
+            $v = new Video();
+            $v->setLink($video_url);
+
+            $trick->setUserId($this->getUser());
+            $trick->addVideo($v);
+
+            $this->entityManager->persist($trick);
+            $this->entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                'Le trick a bien été ajouté, merci pour votre contribution'
+            );
+
+            return $this->redirectToRoute("index");
 
         }
 

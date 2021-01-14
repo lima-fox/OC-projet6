@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Group;
 use App\Entity\Trick;
+use App\Entity\Video;
 use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -40,7 +41,8 @@ class TrickType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'placeholder' => 'Ajouter une vidéo'
-                ]
+                ],
+                'mapped' => false
             ])
             ->add('group_id', EntityType::class, [
                 'class' => Group::class,
