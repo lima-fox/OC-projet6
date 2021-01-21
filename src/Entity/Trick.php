@@ -42,7 +42,7 @@ class Trick
     private $group_id;
 
     /**
-     * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="trick_id")
+     * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="trick_id", cascade={"persist"})
      */
     private $photos;
 

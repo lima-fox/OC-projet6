@@ -6,7 +6,7 @@
     <!-- Masthead-->
     <header class="masthead">
         <div class="container">
-            <img height="600px" width="900" src="{{ trick.getPhotos().first().path }}">
+            <img height="600px" width="900" src="/img_trick/{{ trick.getPhotos().first().path }}">
         </div>
     </header>
 {% endblock %}
@@ -30,7 +30,7 @@
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
-                                    <img class="img-fluid" src="{{ photo.path }}" alt="" />
+                                    <img class="img-fluid" src="/img_trick/{{ photo.path }}" alt="" />
                             </a>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                 <div class="col-lg-4 col-sm-6 mb-4">
                 {% for comment in comments %}
                 <p>{{ comment.getContent() }}</p>
-                <p>{{ comment.getUser().getName() }} | {{ comment.getDateString() }}</p>
+                <p><img height="40" src="https://eu.ui-avatars.com/api/?rounded=true&background=fed136&name={{ comment.getUser().getName() }}/"> {{ comment.getUser().getName() }} | {{ comment.getDateString() }}</p>
                 {% endfor %}
                 </div>
 

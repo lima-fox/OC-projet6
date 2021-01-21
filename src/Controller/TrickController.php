@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\Photo;
 use App\Entity\Trick;
 use App\Entity\Video;
 use App\Form\CommentType;
@@ -12,9 +13,11 @@ use App\Repository\TrickRepository;
 use App\Repository\VideoRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class TrickController extends AbstractController
 {
@@ -59,7 +62,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    public function addTrick(Request $request) : Response
+    public function addTrick(Request $request, SluggerInterface $slugger) : Response
     {
         $trick = new Trick();
 
@@ -70,14 +73,33 @@ class TrickController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid())
         {
+
             $trick = $form->getData();
             $video_url = $request->request->all()['trick']['videos'];
 
             $v = new Video();
             $v->setLink($video_url);
 
+            $photo = $form->get('photos')->getData();
+
+
+            $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+
+            $safeFilename = $slugger->slug($originalFilename);
+            $newFilename = $safeFilename.'-'.uniqid().'.'.$photo->guessExtension();
+
+
+            $photo->move(
+                'img_trick',
+                $newFilename
+            );
+
+            $p = new Photo();
+            $p->setPath($newFilename);
+
             $trick->setUserId($this->getUser());
             $trick->addVideo($v);
+            $trick->addPhoto($p);
 
             $this->entityManager->persist($trick);
             $this->entityManager->flush();
