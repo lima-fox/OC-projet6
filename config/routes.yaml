@@ -19,3 +19,9 @@ addtrick:
 trick:
     path: /trick/{id}
     controller: App\Controller\TrickController::index
+updateTrick:
+    path: /trick/update/{id}
+    controller: App\Controller\TrickController::updateTrick
+deleteTrick:
+    path: /trick/delete/{id}
+    controller: App\Controller\TrickController::deleteTrick

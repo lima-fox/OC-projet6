@@ -114,9 +114,65 @@ class TrickController extends AbstractController
         }
 
 
-
         return $this->render('trick/addtrick.html.twig', [
             'form' => $form->createView()
         ]);
     }
+
+    public function updateTrick(int $id, TrickRepository $trickRepository, Request $request, SluggerInterface $slugger) : Response
+    {
+        $trick = $trickRepository->find($id);
+
+        $form = $this->createForm(TrickType::class, $trick);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+
+            $trick = $form->getData();
+            $video_url = $request->request->all()['trick']['videos'];
+
+            $v = new Video();
+            $v->setLink($video_url);
+
+            $photo = $form->get('photos')->getData();
+
+
+            $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+
+            $safeFilename = $slugger->slug($originalFilename);
+            $newFilename = $safeFilename.'-'.uniqid().'.'.$photo->guessExtension();
+
+
+            $photo->move(
+                'img_trick',
+                $newFilename
+            );
+
+            $p = new Photo();
+            $p->setPath($newFilename);
+
+            $trick->setUserId($this->getUser());
+            $trick->addVideo($v);
+            $trick->addPhoto($p);
+
+            $this->entityManager->persist($trick);
+            $this->entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                'Le trick a bien été modifié, merci pour votre contribution'
+            );
+
+            return $this->redirectToRoute("index");
+
+        }
+
+        return $this->render('trick/updatetrick.html.twig', [
+            'form' => $form->createView()
+        ]);
+
+    }
+
 }
