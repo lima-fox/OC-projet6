@@ -18,6 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Url;
 
 class TrickType extends AbstractType
 {
@@ -39,36 +40,13 @@ class TrickType extends AbstractType
                     'placeholder' => 'Ajouter une description'
                 ]
             ])
-            ->add('videos', UrlType::class, [
-                'label' => 'Vidéo',
-                'required' => false,
-                'attr' => [
-                    'placeholder' => 'Lien Youtube'
-                ],
-                'mapped' => false
-            ])
-            ->add('photos', FileType::class, [
-                'label' => 'Photo',
-                'required' => true,
-                'mapped' => false,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '2048k',
-                        'mimeTypes' => [
-                            'image/jpeg',
-                            'image/png',
-                        ],
-                        'mimeTypesMessage' => 'Merci de mettre une photo au format jpeg/png.',
-                    ])
-                ],
-            ])
             ->add('group_id', EntityType::class, [
                 'class' => Group::class,
                 'choice_label' => 'name',
                 'expanded' => true,
             ])
             ->add('submit', SubmitType::class,[
-                'label' => 'Ajouter le trick'
+                'label' => 'Confirmer'
             ])
         ;
     }

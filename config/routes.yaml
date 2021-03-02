@@ -16,6 +16,12 @@ verify_mail:
 addtrick:
     path: /trick/addtrick
     controller: App\Controller\TrickController::addTrick
+addvideo:
+    path : /trick/addvideo/{id}
+    controller: App\Controller\TrickController::addVideo
+addphoto:
+    path : /trick/addphoto/{id}
+    controller: App\Controller\TrickController::addPhoto
 trick:
     path: /trick/{id}
     controller: App\Controller\TrickController::index
