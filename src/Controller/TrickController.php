@@ -173,6 +173,29 @@ class TrickController extends AbstractController
 
     }
 
+    public function updateTrick(Request $request, int $id, TrickRepository $trickRepository) : Response
+    {
+        $trick = $trickRepository->find($id);
+
+        $form = $this->createForm(TrickType::class, $trick);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $trick = $form->getData();
+
+            $this->entityManager->persist($trick);
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute("addvideo", ['id' => $trick->getId()]);
+        }
+
+        return $this->render('trick/updatetrick.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
 
 
 }
