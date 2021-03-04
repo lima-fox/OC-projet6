@@ -11,6 +11,7 @@ use App\Form\TrickPhotoType;
 use App\Form\TrickType;
 use App\Form\TrickVideoType;
 use App\Repository\CommentRepository;
+use App\Repository\PhotoRepository;
 use App\Repository\TrickRepository;
 use App\Repository\VideoRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -50,7 +51,6 @@ class TrickController extends AbstractController
 
             $this->entityManager->persist($comment);
             $this->entityManager->flush();
-
 
         }
 
@@ -194,6 +194,19 @@ class TrickController extends AbstractController
         return $this->render('trick/updatetrick.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    public function deletePhoto(int $photo_id, PhotoRepository $photoRepository) : Response
+    {
+        $photo = $photoRepository->find($photo_id);
+        $trick_id = $photo->getTrickId()->getId();
+
+        $this->entityManager->remove($photo);
+        $this->entityManager->flush();
+
+
+        return $this->redirectToRoute("trick", ['id' => $trick_id]);
+
     }
 
 

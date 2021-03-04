@@ -26,12 +26,10 @@
                 {% for photo in trick.getPhotos() %}
                     <div class="col-lg-4 col-sm-6 mb-4">
                         <div class="portfolio-item">
-                            <a class="portfolio-link" data-toggle="modal">
-                                <div class="portfolio-hover">
-                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                                </div>
-                                    <img class="img-fluid" src="/img_trick/{{ photo.path }}" alt="" />
-                            </a>
+                            <div class="portfolio-link" data-toggle="modal">
+                                <img class="img-fluid" src="/img_trick/{{ photo.path }}" alt="" />
+                                <a href={{ path('deletePhoto', {photo_id:photo.id}) }} class="close" tabindex="0" role="button">close</a>
+                            </div>
                         </div>
                     </div>
                 {% endfor %}
