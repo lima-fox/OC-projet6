@@ -28,7 +28,9 @@
                         <div class="portfolio-item">
                             <div class="portfolio-link" data-toggle="modal">
                                 <img class="img-fluid" src="/img_trick/{{ photo.path }}" alt="" />
+                                {% if app.user != null %}
                                 <a href={{ path('deletePhoto', {photo_id:photo.id}) }} class="close" tabindex="0" role="button">close</a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -41,14 +43,17 @@
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div> #}
                                 <iframe width="450" height="250" src="{{ video.link }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                {% if app.user != null %}
+                                <a href={{ path('deleteVideo', {video_id:video.id}) }} class="close" tabindex="0" role="button">close</a>
+                                {% endif %}
                             </a>
                         </div>
                     </div>
                 {% endfor %}
-                <p>{{ trick.description }}</p>
-
 
             </div>
+            <p>{{ trick.description }}</p>
+
             {% if app.user != null %}
             {{ form(form, {"attr": {"id":"contactForm"}} ) }}
             {% endif %}

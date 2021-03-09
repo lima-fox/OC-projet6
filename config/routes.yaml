@@ -34,3 +34,6 @@ deleteTrick:
 deletePhoto:
     path: /trick/delete/photo/{photo_id}
     controller: App\Controller\TrickController::deletePhoto
+deleteVideo:
+    path: /trick/delete/video/{video_id}
+    controller: App\Controller\TrickController::deleteVideo
