@@ -13,3 +13,21 @@ inscription:
 verify_mail:
     path: /verify/mail/{hash}
     controller: App\Controller\RegisterController::verify_mail
+addtrick:
+    path: /trick/addtrick
+    controller: App\Controller\TrickController::addTrick
+addvideo:
+    path : /trick/addvideo/{id}
+    controller: App\Controller\TrickController::addVideo
+addphoto:
+    path : /trick/addphoto/{id}
+    controller: App\Controller\TrickController::addPhoto
+trick:
+    path: /trick/{id}
+    controller: App\Controller\TrickController::index
+updateTrick:
+    path: /trick/update/{id}
+    controller: App\Controller\TrickController::updateTrick
+deleteTrick:
+    path: /trick/delete/{id}
+    controller: App\Controller\TrickController::deleteTrick
