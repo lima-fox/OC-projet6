@@ -36,4 +36,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: /trick/addtrick, roles: ROLE_USER }
+        - { path: /trick/addvideo/, roles: ROLE_USER }
+        - { path: /trick/addphoto/, roles: ROLE_USER }
+        - { path: /trick/update/, roles: ROLE_USER }

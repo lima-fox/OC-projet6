@@ -46,7 +46,7 @@
                             <div class="portfolio-caption-heading">{{ trick.name }}
                                 {% if app.user != null %}
                                 <a href="{{ path('updateTrick', {id: trick.id}) }}"><i class="fas fa-pencil-alt"></i></a>  |
-                                <a href="{{ path('deleteTrick', {id: trick.id}) }}"><i class="fas fa-trash-alt"></i></a>
+                                <a href="{{ path('deleteTrick', {id: trick.id}) }}" onclick="return confirm('Etes-vous sur de vouloir supprimer ce trick?');"><i class="fas fa-trash-alt"></i></a>
                                 {% endif %}
                             </div>
                         </div>
