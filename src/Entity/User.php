@@ -61,6 +61,11 @@ class User implements UserInterface
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $hash_pass;
+
     public function __construct()
     {
         $this->tricks = new ArrayCollection();
@@ -237,6 +242,18 @@ class User implements UserInterface
                 $comment->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getHashPass(): ?string
+    {
+        return $this->hash_pass;
+    }
+
+    public function setHashPass(?string $hash_pass): self
+    {
+        $this->hash_pass = $hash_pass;
 
         return $this;
     }
