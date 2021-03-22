@@ -156,8 +156,6 @@ class RegisterController extends AbstractController
                 'Un mail vous a été envoyé afin de réinitialiser votre mot de passe'
             );
 
-            //return $this->redirectToRoute("forgotpassword");
-
         }
 
         return $this->render('register/forgotpassword.html.twig', [
