@@ -37,3 +37,9 @@ deletePhoto:
 deleteVideo:
     path: /trick/delete/video/{video_id}
     controller: App\Controller\TrickController::deleteVideo
+forgotpassword:
+    path: /forgotpassword
+    controller: App\Controller\RegisterController::forgotPassword
+resetpassword:
+    path: /resetpassword/{hash_pass}
+    controller: App\Controller\RegisterController::resetPassword

@@ -1,12 +1,6 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseform.html.twig' %}
 
 {% block title %}Se connecter{% endblock %}
-
-{% block header %}{% endblock %}
-{% block content1 %}{% endblock %}
-{% block content2 %}{% endblock %}
-{% block about %}{% endblock %}
-
 
 {% block contact %}
 <section class="page-section" id="contact">
@@ -63,9 +57,12 @@
                     #}
                     <div class="text-center">
                         <div id="success"></div>
-                        <button class="btn btn-primary btn-xl text-uppercase" id="sendMessageButton" type="submit">Se connecter</button>
+                        <button class="btn btn-primary btn-xl text-uppercase" id="sendMessageButton" type="submit">Se connecter</button><br/><br/>
+                        <a href="{{ path('forgotpassword') }}">Mot de passe oublié?</a>
                     </div>
                 </form>
+
+
             </div>
 
 
