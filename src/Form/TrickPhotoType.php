@@ -19,6 +19,7 @@ class TrickPhotoType extends AbstractType
                 'label' => 'Photo',
                 'required' => true,
                 'mapped' => false,
+
                 'constraints' => [
                     new File([
                         'maxSize' => '2048k',

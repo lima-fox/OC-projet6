@@ -1,16 +1,33 @@
 {% extends "baseform.html.twig" %}
 
-{% block title %}Ajouter un trick 3/3{% endblock %}
+{% block title %}Ajouter des photos 3/3{% endblock %}
 
 {% block contact %}
     <section class="page-section" id="contact">
         <div class="container">
             <div class="text-center">
-                <h2 class="section-heading text-uppercase">Ajouter un trick - Etape 3</h2>
+                <h2 class="section-heading text-uppercase">Ajouter des photos - Etape 3</h2>
                 <h3 class="section-subheading text-muted"></h3>
             </div>
             <div class="row align-items-stretch mb-5 justify-content-md-center">
                 <div class="col-md-6 form-group" >
+                    {% if trick.getPhotos().first() == false %}
+                        <p>Il n'y a pas encore de photo pour ce trick</p>
+                    {% else %}
+                        {% for photo in trick.getPhotos() %}
+                            <div class="col-lg-4 col-sm-6 mb-4">
+                                <div class="portfolio-item">
+                                    <div class="portfolio-link" data-toggle="modal">
+                                        <img class="img-fluid" src="/img_trick/{{ photo.path }}" alt="" />
+                                        {% if app.user != null %}
+                                            <a href={{ path('deletePhoto', {photo_id:photo.id}) }} class="close" tabindex="0" role="button" onclick="return confirm('Etes-vous sur de vouloir supprimer cette photo?');">close</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
                     {{ form(form, {"attr": {"id":"contactForm"}} ) }} <br/>
                     <a href={{ path('index') }} >Ne pas ajouter de photo</a>
                 </div>

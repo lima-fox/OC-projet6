@@ -110,7 +110,8 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $trick = $form->getData();
-            $video_url = $request->request->all()['trick']['videos'];
+            $video_url = $request->request->all()['trick_video']['videos'];
+
 
             $v = new Video();
             $v->setLink($video_url);
@@ -168,7 +169,8 @@ class TrickController extends AbstractController
         }
 
         return $this->render('trick/addphoto.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'trick' => $trick
         ]);
 
     }
