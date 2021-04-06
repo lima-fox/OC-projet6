@@ -15,7 +15,7 @@
                         <p>Il n'y a pas encore de photo pour ce trick</p>
                     {% else %}
                         {% for photo in trick.getPhotos() %}
-                            <div class="col-lg-4 col-sm-6 mb-4">
+                            <div class="col-lg-6 col-sm-8 mb-4">
                                 <div class="portfolio-item">
                                     <div class="portfolio-link" data-toggle="modal">
                                         <img class="img-fluid" src="/img_trick/{{ photo.path }}" alt="" />
@@ -29,7 +29,7 @@
                     {% endif %}
 
                     {{ form(form, {"attr": {"id":"contactForm"}} ) }} <br/>
-                    <a href={{ path('index') }} >Ne pas ajouter de photo</a>
+                    <a href={{ path('index') }} >Ne pas ajouter de photo / confirmer le trick</a>
                 </div>
             </div>
         </div>

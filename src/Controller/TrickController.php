@@ -121,12 +121,13 @@ class TrickController extends AbstractController
             $this->entityManager->persist($trick);
             $this->entityManager->flush();
 
-            return $this->redirectToRoute("addphoto", ['id' => $trick->getId()]);
+            return $this->redirectToRoute("addvideo", ['id' => $trick->getId()]);
         }
 
         return $this->render('trick/addvideo.html.twig', [
             'form' => $form->createView(),
             'id' => $trick->getId(),
+            'trick' => $trick
         ]);
     }
 
@@ -164,7 +165,7 @@ class TrickController extends AbstractController
             $this->entityManager->persist($trick);
             $this->entityManager->flush();
 
-            return $this->redirectToRoute("index");
+            return $this->redirectToRoute("addphoto", ['id' => $trick->getId()]);
 
         }
 
@@ -194,7 +195,8 @@ class TrickController extends AbstractController
         }
 
         return $this->render('trick/updateTrick.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'trick' => $trick
         ]);
     }
 

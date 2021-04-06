@@ -32,7 +32,7 @@ class TrickPhotoType extends AbstractType
                 ],
             ])
             ->add('submit', SubmitType::class,[
-                'label' => 'Confirmer le trick'
+                'label' => 'Confirmer la photo'
             ])
         ;
     }
