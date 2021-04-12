@@ -17,7 +17,8 @@ use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\File;;
+
 use Symfony\Component\Validator\Constraints\Unique;
 use Symfony\Component\Validator\Constraints\Url;
 
@@ -43,8 +44,9 @@ class TrickType extends AbstractType
             ])
             ->add('group_id', EntityType::class, [
                 'class' => Group::class,
-                'choice_label' => 'name',
-                'expanded' => true,
+                'label' => 'Groupe',
+                'choice_label' => 'label',
+                'expanded' => false,
             ])
             ->add('submit', SubmitType::class,[
                 'label' => 'Confirmer'

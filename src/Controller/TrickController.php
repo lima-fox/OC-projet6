@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TrickController extends AbstractController
 {
@@ -64,7 +65,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    public function addTrick(Request $request) : Response
+    public function addTrick(Request $request, TrickRepository $trickRepository) : Response
     {
         $trick = new Trick();
 
@@ -80,14 +81,8 @@ class TrickController extends AbstractController
 
             $trick->setUserId($this->getUser());
 
-
             $this->entityManager->persist($trick);
             $this->entityManager->flush();
-
-            //$this->addFlash(
-                //'success',
-                //'Le trick a bien été ajouté, merci pour votre contribution'
-            //);
 
             return $this->redirectToRoute("addvideo", ['id' => $trick->getId()]);
 
@@ -209,7 +204,7 @@ class TrickController extends AbstractController
         $this->entityManager->flush();
 
 
-        return $this->redirectToRoute("trick", ['id' => $trick_id]);
+        return $this->redirectToRoute("addphoto", ['id' => $trick_id]);
 
     }
 
@@ -221,7 +216,7 @@ class TrickController extends AbstractController
         $this->entityManager->remove($video);
         $this->entityManager->flush();
 
-        return $this->redirectToRoute("trick", ['id' => $trick_id]);
+        return $this->redirectToRoute("addvideo", ['id' => $trick_id]);
 
     }
 
@@ -250,6 +245,15 @@ class TrickController extends AbstractController
         return $this->redirectToRoute("index");
     }
 
+    public function finalStep() : Response
+    {
+        $this->addFlash(
+            'success',
+            'Votre Trick a bien été ajouté / modifié.'
+        );
+
+        return $this->redirectToRoute("index");
+    }
 
 
 }

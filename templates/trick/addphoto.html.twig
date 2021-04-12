@@ -10,12 +10,12 @@
                 <h3 class="section-subheading text-muted"></h3>
             </div>
             <div class="row align-items-stretch mb-5 justify-content-md-center">
-                <div class="col-md-6 form-group" >
+
                     {% if trick.getPhotos().first() == false %}
                         <p>Il n'y a pas encore de photo pour ce trick</p>
                     {% else %}
                         {% for photo in trick.getPhotos() %}
-                            <div class="col-lg-6 col-sm-8 mb-4">
+                            <div class="col-lg-4 col-sm-6 mb-4">
                                 <div class="portfolio-item">
                                     <div class="portfolio-link" data-toggle="modal">
                                         <img class="img-fluid" src="/img_trick/{{ photo.path }}" alt="" />
@@ -27,11 +27,19 @@
                             </div>
                         {% endfor %}
                     {% endif %}
-
-                    {{ form(form, {"attr": {"id":"contactForm"}} ) }} <br/>
-                    <a href={{ path('index') }} >Ne pas ajouter de photo / confirmer le trick</a>
-                </div>
             </div>
+            <div class="row align-items-stretch justify-content-md-center">
+
+                  <div class="col-md-12">
+                {{ form(form, {"attr": {"id":"contactForm"}} ) }}
+                  </div>
+            </div>
+            <div class="row align-items-stretch justify-content-md-center">
+                    <div class="col-md-12">
+                <a href={{ path('finalstep') }} >Ne pas ajouter de photo / confirmer le trick</a>
+                    </div>
+            </div>
+
         </div>
     </section>
 {% endblock %}

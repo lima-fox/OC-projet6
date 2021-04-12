@@ -23,6 +23,11 @@
     <section class="page-section bg-light" id="portfolio">
         <div class="container">
             <div class="text-center">
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
                 <h2 class="section-heading text-uppercase">Derniers tricks</h2>
                 {# <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3> #}
             </div>
