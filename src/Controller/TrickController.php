@@ -79,7 +79,10 @@ class TrickController extends AbstractController
 
             $trick = $form->getData();
 
+            $created_at = new \DateTime("now");
+
             $trick->setUserId($this->getUser());
+            $trick->setCreatedAt($created_at);
 
             $this->entityManager->persist($trick);
             $this->entityManager->flush();
@@ -182,6 +185,9 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $trick = $form->getData();
+
+            $updated_at = new \DateTime("now");
+            $trick = $trick->setUpdatedAt($updated_at);
 
             $this->entityManager->persist($trick);
             $this->entityManager->flush();

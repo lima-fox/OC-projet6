@@ -51,6 +51,10 @@
 
             </div>
             <p>{{ trick.description }}</p>
+            <p>Edité le {{ trick.getDateString() }}</p>
+            {% if trick.getUpdateString() != null %}
+                <p style="color: #17a2b8">Modifié le {{ trick.getUpdateString() }}</p>
+            {% endif %}
 
             {% if app.user != null %}
             <a href="{{ path('updateTrick', {id: trick.id}) }}" class="float-right"><i class="fas fa-pencil-alt"></i>Modifier</a><br/>
@@ -59,11 +63,15 @@
 
 
             <h4 class="section-heading text-center col-lg-6">Commentaires</h4>
-                <div class="col-lg-4 col-sm-6 mb-4">
-                {% for comment in comments %}
-                <p>{{ comment.getContent() }}</p>
-                <p><img height="40" src="https://eu.ui-avatars.com/api/?rounded=true&background=fed136&name={{ comment.getUser().getName() }}/"> {{ comment.getUser().getName() }} | {{ comment.getDateString() }}</p>
-                {% endfor %}
+                <div class="col-lg-12 col-sm-6 mb-4">
+                {% if comments == null %}
+                    <p>Il n'y a pas encore de commentaire pour ce trick, connectez-vous pour pouvoir laisser un commentaire.</p>
+                    {% else %}
+                    {% for comment in comments %}
+                        <p>{{ comment.getContent() }}</p>
+                        <p><img height="40" src="https://eu.ui-avatars.com/api/?rounded=true&background=fed136&name={{ comment.getUser().getName() }}/"> {{ comment.getUser().getName() }} | {{ comment.getDateString() }}</p>
+                    {% endfor %}
+                {% endif %}
                 </div>
 
         </div>
