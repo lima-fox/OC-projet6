@@ -35,6 +35,11 @@ class TrickController extends AbstractController
     public function index(TrickRepository $trickRepository, int $id, Request $request, CommentRepository $commentRepository): Response
     {
         $trick = $trickRepository->find($id);
+        $page_size  = 10;
+        $offset     = 0;
+
+        if ($request->query->get("offset") != null)
+            $offset = $request->query->get("offset");
 
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
@@ -55,13 +60,17 @@ class TrickController extends AbstractController
 
         }
 
-        $comments = $commentRepository->findBy(['trick' => $trick], ['id' => 'desc'], 10 );
+        $comments = $commentRepository->findBy(['trick' => $trick], ['id' => 'desc'], $page_size, $offset);
 
+        $comments_count = $commentRepository->count(['trick' => $trick]);
 
         return $this->render('trick/index.html.twig', [
             'trick' => $trick,
             'form' => $form->createView(),
-            'comments' => $comments
+            'comments' => $comments,
+            'page_size' => $page_size,
+            'offset'    => $offset,
+            'comments_count' => $comments_count
         ]);
     }
 

@@ -68,11 +68,25 @@
                     <p>Il n'y a pas encore de commentaire pour ce trick, connectez-vous pour pouvoir laisser un commentaire.</p>
                     {% else %}
                     {% for comment in comments %}
-                        <p>{{ comment.getContent() }}</p>
-                        <p><img height="40" src="https://eu.ui-avatars.com/api/?rounded=true&background=fed136&name={{ comment.getUser().getName() }}/"> {{ comment.getUser().getName() }} | {{ comment.getDateString() }}</p>
+                        <p><img height="40" src="https://eu.ui-avatars.com/api/?rounded=true&background=fed136&name={{ comment.getUser().getName() }}/"> {{ comment.getUser().getName() }} | {{ comment.getDateString() }} : {{ comment.getContent() }}</p>
                     {% endfor %}
                 {% endif %}
                 </div>
+            <div class="col-lg-12 col-sm-6 mb-4 text-center">
+                {% if(offset > 0) %}
+                    {% set offset_before = offset - page_size  %}
+                    <a href="?offset={{  offset_before }}">< Page précédente</a>
+                {% endif %}
+
+                {% if((offset + page_size) < comments_count) %}
+                    {% set offset_after = offset + page_size  %}
+                    <a href="?offset={{ offset_after }}">Page suivante ></a>
+                {% endif %}
+            </div>
+
+
+
+
 
         </div>
     </section>

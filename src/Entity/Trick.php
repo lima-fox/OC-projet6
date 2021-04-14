@@ -250,6 +250,10 @@ class Trick
 
     public function getUpdateString() : string
     {
+        if ($this->getUpdatedAt() == null)
+        {
+            return "";
+        }
         return $this->getUpdatedAt()->format('d-m-Y');
     }
 }
