@@ -1,5 +1,8 @@
 # OC Projet 6 - snowtricks
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8f554dd65a9f4fd992a4b50434c1617d)](https://app.codacy.com/gh/lima-fox/OC-projet6?utm_source=github.com&utm_medium=referral&utm_content=lima-fox/OC-projet6&utm_campaign=Badge_Grade_Settings)
+
+
 ### Install dependancies
 ```shell
 composer install
