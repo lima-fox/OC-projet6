@@ -9,7 +9,7 @@
             {% if trick.getPhotos().first() == false %}
                 <img class="img-fluid" src="https://via.placeholder.com/600x400" alt="" />
             {% else %}
-                <img class="img-fluid" src="/img_trick/{{ trick.getPhotos().first().path }}" alt="" />
+                <img style="width: 700px; height: 600px; object-fit: cover" class="img-fluid" src="/img_trick/{{ trick.getPhotos().first().path }}" alt="" />
             {% endif %}
         </div>
     </header>
@@ -31,7 +31,7 @@
                     <div class="col-lg-4 col-sm-6 mb-4">
                         <div class="portfolio-item">
                             <div class="portfolio-link" data-toggle="modal">
-                                <img class="img-fluid" src="/img_trick/{{ photo.path }}" alt="" />
+                                <img style="width: 355px; height: 250px; object-fit: cover" class="img-fluid" src="/img_trick/{{ photo.path }}" alt="" />
                             </div>
                         </div>
                     </div>

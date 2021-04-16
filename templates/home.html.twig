@@ -43,7 +43,9 @@
                                 {% if trick.getPhotos().first() == false %}
                                 <img class="img-fluid" src="https://via.placeholder.com/400x220" alt="" />
                                 {% else %}
-                                <img class="img-fluid" src="/img_trick/{{ trick.getPhotos().first().path }}" alt="" />
+
+                                <img  style="width: 355px; height: 250px; object-fit: cover" src="/img_trick/{{ trick.getPhotos().first().path }}" alt="" />
+
                                 {% endif %}
                             </a>
                         </a>
