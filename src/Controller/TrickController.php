@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TrickController extends AbstractController
 {
@@ -34,6 +35,11 @@ class TrickController extends AbstractController
     public function index(TrickRepository $trickRepository, int $id, Request $request, CommentRepository $commentRepository): Response
     {
         $trick = $trickRepository->find($id);
+        $page_size  = 10;
+        $offset     = 0;
+
+        if ($request->query->get("offset") != null)
+            $offset = $request->query->get("offset");
 
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
@@ -54,17 +60,21 @@ class TrickController extends AbstractController
 
         }
 
-        $comments = $commentRepository->findBy(['trick' => $trick], ['id' => 'desc'], 10 );
+        $comments = $commentRepository->findBy(['trick' => $trick], ['id' => 'desc'], $page_size, $offset);
 
+        $comments_count = $commentRepository->count(['trick' => $trick]);
 
         return $this->render('trick/index.html.twig', [
             'trick' => $trick,
             'form' => $form->createView(),
-            'comments' => $comments
+            'comments' => $comments,
+            'page_size' => $page_size,
+            'offset'    => $offset,
+            'comments_count' => $comments_count
         ]);
     }
 
-    public function addTrick(Request $request) : Response
+    public function addTrick(Request $request, TrickRepository $trickRepository) : Response
     {
         $trick = new Trick();
 
@@ -78,16 +88,13 @@ class TrickController extends AbstractController
 
             $trick = $form->getData();
 
-            $trick->setUserId($this->getUser());
+            $created_at = new \DateTime("now");
 
+            $trick->setUserId($this->getUser());
+            $trick->setCreatedAt($created_at);
 
             $this->entityManager->persist($trick);
             $this->entityManager->flush();
-
-            //$this->addFlash(
-                //'success',
-                //'Le trick a bien été ajouté, merci pour votre contribution'
-            //);
 
             return $this->redirectToRoute("addvideo", ['id' => $trick->getId()]);
 
@@ -110,7 +117,8 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $trick = $form->getData();
-            $video_url = $request->request->all()['trick']['videos'];
+            $video_url = $request->request->all()['trick_video']['videos'];
+
 
             $v = new Video();
             $v->setLink($video_url);
@@ -120,12 +128,13 @@ class TrickController extends AbstractController
             $this->entityManager->persist($trick);
             $this->entityManager->flush();
 
-            return $this->redirectToRoute("addphoto", ['id' => $trick->getId()]);
+            return $this->redirectToRoute("addvideo", ['id' => $trick->getId()]);
         }
 
         return $this->render('trick/addvideo.html.twig', [
             'form' => $form->createView(),
             'id' => $trick->getId(),
+            'trick' => $trick
         ]);
     }
 
@@ -163,12 +172,13 @@ class TrickController extends AbstractController
             $this->entityManager->persist($trick);
             $this->entityManager->flush();
 
-            return $this->redirectToRoute("index");
+            return $this->redirectToRoute("addphoto", ['id' => $trick->getId()]);
 
         }
 
         return $this->render('trick/addphoto.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'trick' => $trick
         ]);
 
     }
@@ -185,6 +195,9 @@ class TrickController extends AbstractController
 
             $trick = $form->getData();
 
+            $updated_at = new \DateTime("now");
+            $trick = $trick->setUpdatedAt($updated_at);
+
             $this->entityManager->persist($trick);
             $this->entityManager->flush();
 
@@ -192,7 +205,8 @@ class TrickController extends AbstractController
         }
 
         return $this->render('trick/updateTrick.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'trick' => $trick
         ]);
     }
 
@@ -205,7 +219,7 @@ class TrickController extends AbstractController
         $this->entityManager->flush();
 
 
-        return $this->redirectToRoute("trick", ['id' => $trick_id]);
+        return $this->redirectToRoute("addphoto", ['id' => $trick_id]);
 
     }
 
@@ -217,7 +231,7 @@ class TrickController extends AbstractController
         $this->entityManager->remove($video);
         $this->entityManager->flush();
 
-        return $this->redirectToRoute("trick", ['id' => $trick_id]);
+        return $this->redirectToRoute("addvideo", ['id' => $trick_id]);
 
     }
 
@@ -246,6 +260,15 @@ class TrickController extends AbstractController
         return $this->redirectToRoute("index");
     }
 
+    public function finalStep() : Response
+    {
+        $this->addFlash(
+            'success',
+            'Votre Trick a bien été ajouté / modifié.'
+        );
+
+        return $this->redirectToRoute("index");
+    }
 
 
 }

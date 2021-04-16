@@ -43,3 +43,6 @@ forgotpassword:
 resetpassword:
     path: /resetpassword/{hash_pass}
     controller: App\Controller\RegisterController::resetPassword
+finalstep:
+    path: /finalstep
+    controller: App\Controller\TrickController::finalStep

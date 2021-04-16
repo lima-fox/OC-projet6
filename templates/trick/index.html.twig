@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% block title %}{{ trick.name }}{% endblock %}
+{% block title %}Snowtricks - {{ trick.name }}{% endblock %}
 
 {% block header %}
     <!-- Masthead-->
@@ -9,7 +9,7 @@
             {% if trick.getPhotos().first() == false %}
                 <img class="img-fluid" src="https://via.placeholder.com/600x400" alt="" />
             {% else %}
-                <img class="img-fluid" src="/img_trick/{{ trick.getPhotos().first().path }}" alt="" />
+                <img style="width: 700px; height: 600px; object-fit: cover" class="img-fluid" src="/img_trick/{{ trick.getPhotos().first().path }}" alt="" />
             {% endif %}
         </div>
     </header>
@@ -31,10 +31,7 @@
                     <div class="col-lg-4 col-sm-6 mb-4">
                         <div class="portfolio-item">
                             <div class="portfolio-link" data-toggle="modal">
-                                <img class="img-fluid" src="/img_trick/{{ photo.path }}" alt="" />
-                                {% if app.user != null %}
-                                <a href={{ path('deletePhoto', {photo_id:photo.id}) }} class="close" tabindex="0" role="button" onclick="return confirm('Etes-vous sur de vouloir supprimer cette photo?');">close</a>
-                                {% endif %}
+                                <img style="width: 355px; height: 250px; object-fit: cover" class="img-fluid" src="/img_trick/{{ photo.path }}" alt="" />
                             </div>
                         </div>
                     </div>
@@ -47,9 +44,6 @@
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div> #}
                                 <iframe width="450" height="250" src="{{ video.link }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                {% if app.user != null %}
-                                <a href={{ path('deleteVideo', {video_id:video.id}) }} class="close" tabindex="0" role="button" onclick="return confirm('Etes-vous sur de vouloir supprimer cette vidéo?');">close</a>
-                                {% endif %}
                             </a>
                         </div>
                     </div>
@@ -57,19 +51,42 @@
 
             </div>
             <p>{{ trick.description }}</p>
+            <p>Edité le {{ trick.getDateString() }}</p>
+            {% if trick.getUpdateString() != null %}
+                <p style="color: #17a2b8">Modifié le {{ trick.getUpdateString() }}</p>
+            {% endif %}
 
             {% if app.user != null %}
-            {{ form(form, {"attr": {"id":"contactForm"}} ) }}
+            <a href="{{ path('updateTrick', {id: trick.id}) }}" class="float-right"><i class="fas fa-pencil-alt"></i>Modifier</a><br/>
+                {{ form(form, {"attr": {"id":"contactForm"}} ) }}
             {% endif %}
 
 
             <h4 class="section-heading text-center col-lg-6">Commentaires</h4>
-                <div class="col-lg-4 col-sm-6 mb-4">
-                {% for comment in comments %}
-                <p>{{ comment.getContent() }}</p>
-                <p><img height="40" src="https://eu.ui-avatars.com/api/?rounded=true&background=fed136&name={{ comment.getUser().getName() }}/"> {{ comment.getUser().getName() }} | {{ comment.getDateString() }}</p>
-                {% endfor %}
+                <div class="col-lg-12 col-sm-6 mb-4">
+                {% if comments == null %}
+                    <p>Il n'y a pas encore de commentaire pour ce trick, connectez-vous pour pouvoir laisser un commentaire.</p>
+                    {% else %}
+                    {% for comment in comments %}
+                        <p><img height="40" src="https://eu.ui-avatars.com/api/?rounded=true&background=fed136&name={{ comment.getUser().getName() }}/"> {{ comment.getUser().getName() }} | {{ comment.getDateString() }} : {{ comment.getContent() }}</p>
+                    {% endfor %}
+                {% endif %}
                 </div>
+            <div class="col-lg-12 col-sm-6 mb-4 text-center">
+                {% if(offset > 0) %}
+                    {% set offset_before = offset - page_size  %}
+                    <a href="?offset={{  offset_before }}">< Page précédente</a>
+                {% endif %}
+
+                {% if((offset + page_size) < comments_count) %}
+                    {% set offset_after = offset + page_size  %}
+                    <a href="?offset={{ offset_after }}">Page suivante ></a>
+                {% endif %}
+            </div>
+
+
+
+
 
         </div>
     </section>

@@ -1,16 +1,36 @@
 {% extends "baseform.html.twig" %}
 
-{% block title %}Ajouter un trick 2/3{% endblock %}
+{% block title %}Ajouter des vidéos 2/3{% endblock %}
 
 {% block contact %}
     <section class="page-section" id="contact">
         <div class="container">
             <div class="text-center">
-                <h2 class="section-heading text-uppercase">Ajouter un trick - Etape 2</h2>
+                <h2 class="section-heading text-uppercase">Ajouter des vidéos - Etape 2</h2>
                 <h3 class="section-subheading text-muted"></h3>
             </div>
             <div class="row align-items-stretch mb-5 justify-content-md-center">
                 <div class="col-md-6 form-group" >
+                    {% if trick.getVideos().first() == false %}
+                    <p>Il n'y a pas encore de vidéo pour ce trick</p>
+                    {% else %}
+                        {% for video in trick.getVideos() %}
+                            <div class="col-lg-4 col-sm-6 mb-4">
+                                <div class="portfolio-item">
+                                    <a class="portfolio-link" data-toggle="modal">
+                                        {# <div class="portfolio-hover">
+                                        <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                    </div> #}
+                                        <iframe width="450" height="250" src="{{ video.link }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        {% if app.user != null %}
+                                            <a href={{ path('deleteVideo', {video_id:video.id}) }} class="close" tabindex="0" role="button" onclick="return confirm('Etes-vous sur de vouloir supprimer cette vidéo?');">close</a>
+                                        {% endif %}
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
                     {{ form(form, {"attr": {"id":"contactForm"}} ) }} <br/>
                     <a href={{ path('addphoto', {id}) }} >Passer à l'étape suivante</a>
                 </div>

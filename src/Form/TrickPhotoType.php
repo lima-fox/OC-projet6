@@ -19,6 +19,7 @@ class TrickPhotoType extends AbstractType
                 'label' => 'Photo',
                 'required' => true,
                 'mapped' => false,
+
                 'constraints' => [
                     new File([
                         'maxSize' => '2048k',
@@ -31,7 +32,7 @@ class TrickPhotoType extends AbstractType
                 ],
             ])
             ->add('submit', SubmitType::class,[
-                'label' => 'Confirmer le trick'
+                'label' => 'Confirmer la photo'
             ])
         ;
     }
