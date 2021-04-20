@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
@@ -255,5 +256,13 @@ class Trick
             return "";
         }
         return $this->getUpdatedAt()->format('d-m-Y');
+    }
+
+    public function getSlugName() : string
+    {
+        $slugger = new AsciiSlugger();
+        $slug = $slugger->slug($this->getName());
+
+        return strtolower($slug);
     }
 }

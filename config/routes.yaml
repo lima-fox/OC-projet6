@@ -23,7 +23,7 @@ addphoto:
     path : /trick/addphoto/{id}
     controller: App\Controller\TrickController::addPhoto
 trick:
-    path: /trick/{id}
+    path: /trick/{id}/{slug_name}
     controller: App\Controller\TrickController::index
 updateTrick:
     path: /trick/update/{id}

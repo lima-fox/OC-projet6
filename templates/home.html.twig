@@ -39,7 +39,7 @@
                             <div class="portfolio-hover">
                                 <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
-                            <a href="{{ path('trick', {id: trick.id}) }}" >
+                            <a href="{{ path('trick', {id: trick.id, slug_name: trick.getSlugName()}) }}" >
                                 {% if trick.getPhotos().first() == false %}
                                 <img class="img-fluid" src="https://via.placeholder.com/400x220" alt="" />
                                 {% else %}
